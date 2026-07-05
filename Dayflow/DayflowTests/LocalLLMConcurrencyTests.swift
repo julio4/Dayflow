@@ -22,7 +22,8 @@ final class LocalLLMConcurrencyTests: XCTestCase {
   override func setUp() {
     super.setUp()
     let keys = [concurrencyKey, engineKey, modelKey, baseURLKey, analyticsKey]
-    saved = Dictionary(uniqueKeysWithValues: keys.map { ($0, UserDefaults.standard.object(forKey: $0)) })
+    saved = Dictionary(
+      uniqueKeysWithValues: keys.map { ($0, UserDefaults.standard.object(forKey: $0)) })
     keys.forEach { UserDefaults.standard.removeObject(forKey: $0) }
     // Keep any test-triggered telemetry offline.
     UserDefaults.standard.set(false, forKey: analyticsKey)
@@ -146,7 +147,8 @@ final class LocalLLMConcurrencyTests: XCTestCase {
       """
     print(evidence)
 
-    let evidenceDir = "/var/folders/bt/8cq8cf9j705bm1dd707kwdww0000gn/T/no-mistakes-evidence/01KWRM69GZXR8ET2516FEFTR76"
+    let evidenceDir =
+      "/var/folders/bt/8cq8cf9j705bm1dd707kwdww0000gn/T/no-mistakes-evidence/01KWRM69GZXR8ET2516FEFTR76"
     let evidenceURL = URL(fileURLWithPath: evidenceDir, isDirectory: true)
     try? FileManager.default.createDirectory(at: evidenceURL, withIntermediateDirectories: true)
     try? evidence.write(
@@ -160,7 +162,8 @@ final class LocalLLMConcurrencyTests: XCTestCase {
   /// "Max concurrent requests" stepper) to a PNG so the reviewer can see the control.
   @MainActor
   func testRenderMaxConcurrencyStepperScreenshot() throws {
-    let evidenceDir = "/var/folders/bt/8cq8cf9j705bm1dd707kwdww0000gn/T/no-mistakes-evidence/01KWRM69GZXR8ET2516FEFTR76"
+    let evidenceDir =
+      "/var/folders/bt/8cq8cf9j705bm1dd707kwdww0000gn/T/no-mistakes-evidence/01KWRM69GZXR8ET2516FEFTR76"
     let evidenceURL = URL(fileURLWithPath: evidenceDir, isDirectory: true)
     try? FileManager.default.createDirectory(at: evidenceURL, withIntermediateDirectories: true)
 
@@ -198,7 +201,9 @@ final class LocalLLMConcurrencyTests: XCTestCase {
 
     let outURL = evidenceURL.appendingPathComponent("settings-max-concurrent-requests.png")
     try png.write(to: outURL)
-    print("SCREENSHOT written: \(outURL.path) (\(png.count) bytes, \(Int(bounds.width))x\(Int(bounds.height)) pt)")
+    print(
+      "SCREENSHOT written: \(outURL.path) (\(png.count) bytes, \(Int(bounds.width))x\(Int(bounds.height)) pt)"
+    )
     XCTAssertGreaterThan(png.count, 1000, "rendered PNG should be non-trivial")
   }
 
@@ -287,7 +292,9 @@ final class LocalLLMConcurrencyTests: XCTestCase {
     _ run: RunResult, file: StaticString = #filePath, line: UInt = #line
   ) {
     let timestamps = mergePromptTimestamps(run)
-    XCTAssertEqual(timestamps.count, run.describeCount, "one merge-prompt entry per frame", file: file, line: line)
+    XCTAssertEqual(
+      timestamps.count, run.describeCount, "one merge-prompt entry per frame", file: file,
+      line: line)
     XCTAssertEqual(
       timestamps, timestamps.sorted(), "merge input must be sorted ascending by timestamp",
       file: file, line: line)
